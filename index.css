@@ -1,62 +1,127 @@
- * { 
+/* ========================================================
+   1. RESETEO Y BASE (MOBILE-FIRST)
+   ======================================================== */
+* { 
     box-sizing: border-box; 
     margin: 0; 
     padding: 0; 
-    font-family: 'Segoe UI', sans-serif; 
+    font-family: 'Segoe UI', Arial, sans-serif; 
 }
 
 body { 
     display: flex; 
-    background: #f4f6f9; 
+    flex-direction: column;
+    background-color: #f8fafc; 
     min-height: 100vh; 
+    width: 100%;
+    overflow-x: hidden;
 }
 
-/* BOTÓN DE MENÚ HAMBURGUESA (MÓVIL) */
+/* ========================================================
+   2. BARRA NAVEGACIÓN MÓVIL SUPERIOR
+   ======================================================== */
+.mobile-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1e293b;
+    color: white;
+    padding: 12px 16px;
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.mobile-logo {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #38bdf8;
+}
+
+.btn-toggle-menu, 
 .menu-toggle {
-    display: none;
-    background: #1e293b;
+    background: #0f172a;
     color: white;
     border: none;
-    font-size: 1.5rem;
-    padding: 8px 12px;
+    font-size: 1.3rem;
+    padding: 6px 12px;
     border-radius: 6px;
     cursor: pointer;
 }
 
-/* MENÚ LATERAL RECTANGULAR */
+.cart-indicator-mobile {
+    font-weight: bold;
+    background-color: #334155;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+/* ========================================================
+   3. MENÚ LATERAL (SIDEBAR) RESPONSIVE
+   ======================================================== */
 .sidebar { 
-    width: 250px; 
+    width: 260px; 
+    height: 100vh; 
     background: #1e293b; 
     color: #fff; 
     display: flex; 
     flex-direction: column; 
     position: fixed; 
-    height: 100vh; 
-    z-index: 90;
+    top: 0;
+    left: 0;
+    z-index: 1040;
+    transform: translateX(-100%); /* Oculto por defecto en móviles */
     transition: transform 0.3s ease-in-out;
+    box-shadow: 4px 0 15px rgba(0,0,0,0.3);
+    padding: 20px 15px;
+}
+
+/* Activación por Javascript */
+.sidebar.open, 
+.sidebar.active {
+    transform: translateX(0);
 }
 
 .sidebar h2 { 
-    padding: 20px; 
-    text-align: center; 
-    background: #0f172a; 
     font-size: 1.2rem; 
-    border-bottom: 1px solid #334155; 
+    color: #38bdf8;
+    margin-bottom: 15px;
 }
 
+.btn-close-sidebar {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+.sidebar nav {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar nav a, 
 .sidebar nav button { 
     width: 100%; 
-    padding: 15px 20px; 
+    padding: 12px 15px; 
     border: none; 
     background: transparent; 
     color: #cbd5e1; 
     text-align: left; 
     cursor: pointer; 
-    font-size: 1rem; 
-    border-bottom: 1px solid #334155; 
-    transition: 0.3s; 
+    font-size: 0.95rem; 
+    text-decoration: none;
+    border-radius: 6px;
+    margin-bottom: 5px;
+    transition: background 0.2s; 
 }
 
+.sidebar nav a:hover, 
+.sidebar nav a.active,
 .sidebar nav button:hover, 
 .sidebar nav button.active { 
     background: #3b82f6; 
@@ -64,11 +129,29 @@ body {
     font-weight: bold; 
 }
 
-/* CONTENIDO PRINCIPAL */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1030;
+}
+
+.sidebar-overlay.active {
+    display: block;
+}
+
+/* ========================================================
+   4. ÁREA PRINCIPAL
+   ======================================================== */
 .main-content { 
-    margin-left: 250px; 
+    width: 100%; 
+    margin-left: 0 !important; 
+    padding: 15px !important; 
     flex: 1; 
-    padding: 30px; 
     transition: margin-left 0.3s ease-in-out;
 }
 
@@ -76,84 +159,42 @@ body {
     display: flex; 
     justify-content: space-between; 
     align-items: center; 
-    margin-bottom: 25px; 
+    margin-bottom: 20px; 
     gap: 15px;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 10px;
 }
 
 .btn-cart { 
     background: #10b981; 
     color: white; 
     border: none; 
-    padding: 10px 20px; 
+    padding: 10px 16px; 
     border-radius: 6px; 
     cursor: pointer; 
     font-weight: bold; 
     white-space: nowrap;
 }
 
-/* CARRUSEL DE PROMOCIONES */
-.carousel { 
-    position: relative; 
-    width: 200%; 
-    height: 280px; 
-    overflow: hidden; 
-    border-radius: 12px; 
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
-    margin-bottom: 30px; 
-    
-}
-
-
-
-
-.slide { 
-    position: absolute; 
-    width: 100%; 
-    height: 100%; 
-    opacity: 0; 
-    transition: opacity 0.8s ease-in-out; 
-    display: flex; 
-    align-items: flex-end; 
-}
-
-.slide.active { 
-    opacity: 1; 
-}
-
-.slide img { 
-    width: 100%; 
-    height: 100%; 
-    object-fit: cover; 
-    position: absolute; 
-    top: 0; 
-    left: 0; 
-    z-index: 1; 
-}
-
-.slide-caption { 
-    position: relative; 
-    z-index: 2; 
-    background: rgba(15, 23, 42, 0.75); 
-    color: white; 
-    padding: 15px 25px; 
-    width: 100%; 
-    backdrop-filter: blur(4px); 
-}
-
-/* GRID DE PRODUCTOS */
 .section-title { 
     margin-bottom: 15px; 
     color: #1e293b; 
+    font-size: 1.2rem;
 }
 
-.grid-productos { 
+/* ========================================================
+   5. GRID Y TARJETAS (CARDS)
+   ======================================================== */
+.grid-productos,
+.contenedor-cards { 
     display: grid; 
-    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); 
-    gap: 20px; 
+    /* En teléfonos se muestran 2 columnas bien proporcionadas */
+    grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); 
+    gap: 12px !important; 
+    padding: 5px 0 !important;
 }
 
-/* CARDS DE PRODUCTOS */
-.card { 
+.card, .card-compacta { 
     background: white; 
     border-radius: 8px; 
     border: 1px solid #e2e8f0; 
@@ -161,69 +202,116 @@ body {
     display: flex; 
     flex-direction: column; 
     justify-content: space-between; 
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
 
-.card img { 
+.card img, .card-img-container img { 
     width: 100%; 
-    height: 160px; 
+    height: 120px; 
     object-fit: cover; 
     background-color: #f1f5f9; 
 }
 
-.card-body { 
-    padding: 12px; 
+.card-body, .card-content { 
+    padding: 10px; 
     text-align: center; 
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 
 .card-body h4 { 
-    font-size: 0.95rem; 
-    margin-bottom: 5px; 
+    font-size: 0.85rem; 
     color: #334155; 
+    line-height: 1.2;
 }
 
 .card-body .price { 
     color: #ef4444; 
-    font-size: 1.1rem; 
+    font-size: 1rem; 
     font-weight: bold; 
-    margin: 8px 0; 
 }
 
-.btn-add { 
-    background: #3b82f6; 
+.cantidad-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin: 4px 0;
+}
+
+.select-cantidad {
+    padding: 3px 6px;
+    border-radius: 4px;
+    border: 1px solid #cbd5e1;
+    background-color: #f8fafc;
+    font-size: 0.85rem;
+}
+
+.acciones-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: auto;
+}
+
+.btn-add, .btn-agregar, .btn-comprar { 
     color: white; 
     border: none; 
-    width: 85%; 
-    padding: 8px; 
+    padding: 7px 5px; 
     border-radius: 5px; 
     cursor: pointer; 
-    margin: 0 auto; 
-    display: block; 
     font-weight: bold; 
+    font-size: 0.78rem;
+    white-space: nowrap;
+    width: 100%;
 }
 
-/* MODALES */
-.modal { 
+.btn-add, .btn-agregar { background-color: #2563eb; }
+.btn-comprar { background-color: #10b981; }
+
+/* Variante de Tarjetas Horizontales */
+.card-horizontal {
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.img-horizontal {
+    height: 100px;
+    width: 100%;
+    object-fit: cover;
+}
+
+/* ========================================================
+   6. MODALES Y VENTANAS EMERGENTES
+   ======================================================== */
+.modal, .modal-overlay { 
     display: none; 
     position: fixed; 
     top: 0; 
     left: 0; 
-    width: 100%; 
-    height: 100%; 
+    width: 100vw; 
+    height: 100vh; 
     background: rgba(0,0,0,0.6); 
-    z-index: 100; 
+    z-index: 1050; 
     justify-content: center; 
     align-items: center; 
+    padding: 15px;
 }
 
-.modal-content { 
+.modal-content, .modal-overlay .modal-content { 
     background: white; 
-    padding: 25px; 
-    border-radius: 10px; 
-    width: 450px; 
-    max-width: 90%; 
+    padding: 20px; 
+    border-radius: 12px; 
+    width: 100%; 
+    max-width: 480px; 
     position: relative; 
     max-height: 90vh; 
     overflow-y: auto; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 
 .close-btn { 
@@ -235,22 +323,21 @@ body {
     color: #64748b; 
 }
 
-/* CARRITO Y FORMULARIO */
 .cart-item { 
     display: flex; 
     justify-content: space-between; 
     border-bottom: 1px solid #e2e8f0; 
     padding: 8px 0; 
-    font-size: 0.9rem; 
+    font-size: 0.85rem; 
 }
 
 .form-group { 
-    margin-bottom: 12px; 
+    margin-bottom: 10px; 
 }
 
 .form-group label { 
     display: block; 
-    font-size: 0.85rem; 
+    font-size: 0.8rem; 
     margin-bottom: 4px; 
     color: #475569; 
 }
@@ -262,694 +349,33 @@ body {
     border-radius: 4px; 
 }
 
-/* TICKET DE COMPRA */
 .ticket-box { 
     background: #fffbeb; 
     border: 1px dashed #d97706; 
-    padding: 20px; 
+    padding: 15px; 
     font-family: monospace; 
     margin-top: 15px; 
-}
-
-.ticket-box h3 { 
-    text-align: center; 
-    margin-bottom: 10px; 
+    font-size: 0.85rem;
 }
 
 /* ========================================================
-   REGLAS PARA MOVILES Y PANTALLAS PEQUEÑAS (<= 768px)
+   7. ADAPTACIÓN A TABLETAS (>= 576px)
    ======================================================== */
-@media (max-width: 768px) {
-    /* Muestra el botón hamburguesa */
-    .menu-toggle {
-        display: block;
+@media (min-width: 576px) {
+    .grid-productos,
+    .contenedor-cards {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 16px !important;
     }
 
-    /* Oculta la barra lateral fuera de la pantalla por defecto */
-    .sidebar {
-        transform: translateX(-100%);
-        box-shadow: 4px 0 15px rgba(0,0,0,0.3);
-    }
-
-    /* Clase para mostrar el menú cuando se activa desde JS */
-    .sidebar.open {
-        transform: translateX(0);
-    }
-
-    /* El contenido principal ocupa todo el ancho sin margen izquierdo */
-    .main-content {
-        margin-left: 0;
-        padding: 15px;
-    }
-
-    /* Ajuste de títulos e imagen del carrusel en pantallas pequeñas */
-    .header-top h1 {
-        font-size: 1.2rem;
-    }
-
-    .carousel {
-        height: 180px;
-        margin-bottom: 20px;
-    }
-
-    .slide-caption h3 {
-        font-size: 0.95rem;
-    }
-
-    /* Cards en 1 o 2 columnas según la pantalla */
-    .grid-productos {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        gap: 12px;
-    }
-
-    .card img {
-        height: 120px;
-    }
-
-    .card-body h4 {
-        font-size: 0.85rem;
+    .card img, .card-img-container img {
+        height: 150px;
     }
 }
 
-/* Contenedor del selector de cantidad */
-.cantidad-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin: 10px 0;
-}
-
-.select-cantidad {
-  padding: 4px 8px;
-  border-radius: 4px;
-  border: 1px solid #cbd5e1;
-  background-color: #f8fafc;
-  font-weight: bold;
-}
-
-/* Distribución de los botones */
-.acciones-card {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-top: auto;
-}
-
-.btn-agregar {
-  background-color: #0284c7;
-  color: white;
-  border: none;
-  padding: 8px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.btn-comprar {
-  background-color: #10b981;
-  color: white;
-  border: none;
-  padding: 8px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-
-.sidebar nav button a {
-    display: block;
-    width: 100%;
-    height: 100%;
-    color: inherit;
-    text-decoration: none;
-}
-
-/* ALINEACIÓN Y DISEÑO INTERNO DE TARJETAS */
-.contenedor-cards {
-    padding: 20px 0;
-}
-
-.card {
-    background: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.card img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-}
-
-.card-content {
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.cantidad-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
-
-.acciones-card {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.btn-agregar {
-    background-color: #2563eb;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.btn-comprar {
-    background-color: #10b981;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-/* 1. FIJAR ANCHO DEL MENÚ LATERAL */
-.sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 260px; /* Ancho fijo del menú */
-    height: 100vh;
-    z-index: 100;
-}
-
-/* 2. EMPUJAR TODO EL CONTENIDO PRINCIPAL Y SUS CARDS */
-.main-content,
-.contenedor-cards,
-#vista-inicio,
-#vista-categoria {
-    margin-left: 260px !important; /* Mismo ancho del menú para desplazar todo a la derecha */
-    box-sizing: border-box;
-}
-
-/* 3. GRID DE TARJETAS */
-.grid-productos,
-.contenedor-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 20px;
-    padding: 20px;
-}
-
-/* ANCHO REAL DEL MENÚ */
-.sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 250px;
-    height: 100vh;
-    z-index: 100;
-}
-
-/* REDUCIR MARGEN AL MÍNIMO PARA PEGAR EL CONTENIDO AL MENÚ */
-.main-content,
-#vista-inicio,
-#vista-categoria {
-    margin-left: 250px !important; /* Ajustado exactamente al ancho del sidebar */
-    padding: 15px 25px 15px 10px !important; /* Reduce el relleno izquierdo a 10px para que casi lo roce */
-    width: calc(100% - 250px);
-    box-sizing: border-box;
-}
-
-/* QUITAR ESPACIOS EXTRA EN EL GRID DE CARDS */
-.grid-productos,
-.contenedor-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 20px;
-    padding: 10px 0 !important; /* Elimina relleno lateral sobrante */
-}
-
-
-/* REDUCIR ESPACIO DEL CARRUSEL RESPECTO AL MENÚ */
-.carousel {
-    margin-left: 0 !important; /* Elimina cualquier margen lateral interno sobrante */
-    width: 100%;               /* Ocupa el espacio disponible del contenedor */
-    max-width: 1000px;         /* Limita el ancho máximo para no deformar las imágenes */
-}
-
-/* AJUSTAR EL CONTENEDOR DE LA VISTA DE INICIO */
-#vista-inicio {
-    padding-left: 10px !important; /* Distancia moderada y limpia desde el menú lateral */
-}
-
-/* ALINEAR TÍTULOS Y SECCIONES CON EL CARRUSEL */
-.section-title, 
-.header-top {
-    padding-left: 0 !important;
-    margin-left: 0 !important;
-}
-
-
-/* TARJETA COMPACTA */
-.card-compacta {
-    max-width: 240px;      /* Mantiene el ancho ajustado */
-    margin: 0 auto;        /* Centra la tarjeta dentro de su columna */
-    border-radius: 10px;
-    border: 1px solid #e2e8f0;
-    overflow: hidden;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-}
-
-/* APARTADO Y CONTROL DE LA IMAGEN */
-.card-img-container {
-    width: 100%;
-    height: 140px;         /* Altura compacta para evitar que sea muy alta */
-    overflow: hidden;
-    background-color: #f8fafc;
-}
-
-/* ESTILOS PARA LAS TARJETAS HORIZONTALES */
-.card-horizontal {
-  overflow: hidden;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.img-horizontal {
-  height: 120px;
-  width: 100%;
-  object-fit: cover; /* Ajusta la imagen sin deformarla */
-}
-
-/* ESTILOS PARA LOS BOTONES */
-.btn-agregar, .btn-comprar {
-  font-size: 0.8rem !important;
-  padding: 6px 4px !important;
-  white-space: nowrap; /* Evita que el texto del botón se corte */
-  display: inline-block !important;
-}
-
-.select-cantidad {
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  padding: 2px 5px;
-}
-
-
-/* RESETEO Y BASE */
-body {
-    display: flex;
-    flex-direction: column;
-    background-color: #f8fafc;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    min-height: 100vh;
-}
-
-/* BARRA MÓVIL SUPERIOR */
-.mobile-navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #1e293b;
-    color: white;
-    padding: 10px 15px;
-    position: sticky;
-    top: 0;
-    z-index: 1020;
-}
-
-.mobile-logo {
-    font-weight: bold;
-    font-size: 1.1rem;
-    color: #38bdf8;
-}
-
-.btn-toggle-menu {
-    font-size: 1.2rem;
-    padding: 2px 8px;
-}
-
-.cart-indicator-mobile {
-    font-weight: bold;
-    background-color: #334155;
-    padding: 4px 10px;
-    border-radius: 20px;
-}
-
-/* SIDEBAR / MENÚ LATERAL */
-.sidebar {
-    width: 250px;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: #1e293b;
-    color: white;
-    padding: 20px 15px;
-    box-sizing: border-box;
-    z-index: 1040;
-    transition: transform 0.3s ease-in-out;
-}
-
-.sidebar h2 {
-    font-size: 1.3rem;
-    margin: 0;
-    color: #38bdf8;
-}
-
-.btn-close-sidebar {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.2rem;
-}
-
-.sidebar nav {
-    margin-top: 20px;
-}
-
-.sidebar nav a {
-    display: block;
-    color: #cbd5e1;
-    text-decoration: none;
-    padding: 12px 10px;
-    border-radius: 6px;
-    margin-bottom: 8px;
-    transition: background 0.2s;
-}
-
-.sidebar nav a:hover, .sidebar nav a.active {
-    background-color: #334155;
-    color: white;
-}
-
-.sidebar-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1030;
-}
-
-/* ÁREA DE CONTENIDO */
-.main-content {
-    width: 100%;
-    padding: 15px;
-    box-sizing: border-box;
-}
-
-.header-top {
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 2px solid #e2e8f0;
-    padding-bottom: 10px;
-}
-
-/* TARJETAS HORIZONTALES */
-.card-horizontal {
-    border-radius: 8px;
-    border: 1px solid #e2e8f0;
-    overflow: hidden;
-    background: white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
-
-.img-horizontal {
-    height: 100px;
-    width: 100%;
-    object-fit: cover;
-}
-
-.select-cantidad {
-    padding: 2px 6px;
-    border-radius: 4px;
-    border: 1px solid #cbd5e1;
-}
-
-
-/* RESETEO Y BASE */
-body {
-    display: flex;
-    flex-direction: column;
-    background-color: #f8fafc;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    min-height: 100vh;
-}
-
-/* BARRA MÓVIL SUPERIOR */
-.mobile-navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #1e293b;
-    color: white;
-    padding: 10px 15px;
-    position: sticky;
-    top: 0;
-    z-index: 1020;
-}
-
-.mobile-logo {
-    font-weight: bold;
-    font-size: 1.1rem;
-    color: #38bdf8;
-}
-
-.btn-toggle-menu {
-    font-size: 1.2rem;
-    padding: 2px 8px;
-}
-
-.cart-indicator-mobile {
-    font-weight: bold;
-    background-color: #334155;
-    padding: 4px 10px;
-    border-radius: 20px;
-}
-
-/* SIDEBAR / MENÚ LATERAL */
-.sidebar {
-    width: 250px;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: #1e293b;
-    color: white;
-    padding: 20px 15px;
-    box-sizing: border-box;
-    z-index: 1040;
-    transition: transform 0.3s ease-in-out;
-}
-
-.sidebar h2 {
-    font-size: 1.3rem;
-    margin: 0;
-    color: #38bdf8;
-}
-
-.btn-close-sidebar {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.2rem;
-}
-
-.sidebar nav {
-    margin-top: 20px;
-}
-
-.sidebar nav a {
-    display: block;
-    color: #cbd5e1;
-    text-decoration: none;
-    padding: 12px 10px;
-    border-radius: 6px;
-    margin-bottom: 8px;
-    transition: background 0.2s;
-}
-
-.sidebar nav a:hover, .sidebar nav a.active {
-    background-color: #334155;
-    color: white;
-}
-
-.sidebar-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1030;
-}
-
-/* ÁREA DE CONTENIDO */
-.main-content {
-    width: 100%;
-    padding: 15px;
-    box-sizing: border-box;
-}
-
-.header-top {
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 2px solid #e2e8f0;
-    padding-bottom: 10px;
-}
-
-/* TARJETAS HORIZONTALES */
-.card-horizontal {
-    border-radius: 8px;
-    border: 1px solid #e2e8f0;
-    overflow: hidden;
-    background: white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
-
-.img-horizontal {
-    height: 100px;
-    width: 100%;
-    object-fit: cover;
-}
-
-.select-cantidad {
-    padding: 2px 6px;
-    border-radius: 4px;
-    border: 1px solid #cbd5e1;
-}
-
-/* RESETEO Y BASE */
-body {
-    display: flex;
-    flex-direction: column;
-    background-color: #f8fafc;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    min-height: 100vh;
-}
-
-/* BARRA MÓVIL SUPERIOR */
-.mobile-navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #1e293b;
-    color: white;
-    padding: 10px 15px;
-    position: sticky;
-    top: 0;
-    z-index: 1020;
-}
-
-.mobile-logo {
-    font-weight: bold;
-    font-size: 1.1rem;
-    color: #38bdf8;
-}
-
-.btn-toggle-menu {
-    font-size: 1.2rem;
-    padding: 2px 8px;
-}
-
-.cart-indicator-mobile {
-    font-weight: bold;
-    background-color: #334155;
-    padding: 4px 10px;
-    border-radius: 20px;
-}
-
-/* SIDEBAR / MENÚ LATERAL */
-.sidebar {
-    width: 250px;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: #1e293b;
-    color: white;
-    padding: 20px 15px;
-    box-sizing: border-box;
-    z-index: 1040;
-    transition: transform 0.3s ease-in-out;
-}
-
-.sidebar h2 {
-    font-size: 1.3rem;
-    margin: 0;
-    color: #38bdf8;
-}
-
-.btn-close-sidebar {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.2rem;
-}
-
-.sidebar nav {
-    margin-top: 20px;
-}
-
-.sidebar nav a {
-    display: block;
-    color: #cbd5e1;
-    text-decoration: none;
-    padding: 12px 10px;
-    border-radius: 6px;
-    margin-bottom: 8px;
-    transition: background 0.2s;
-}
-
-.sidebar nav a:hover, .sidebar nav a.active {
-    background-color: #334155;
-    color: white;
-}
-
-.sidebar-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1030;
-}
-
-/* ÁREA DE CONTENIDO */
-.main-content {
-    width: 100%;
-    padding: 15px;
-    box-sizing: border-box;
-}
-
-.header-top {
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 2px solid #e2e8f0;
-    padding-bottom: 10px;
-}
-
-
-/* MEDIA QUERIES (PANTALLAS GRANDES) */
+/* ========================================================
+   8. ADAPTACIÓN A PANTALLAS GRANDES (ESCRITORIO: >= 992px)
+   ======================================================== */
 @media (min-width: 992px) {
     body {
         flex-direction: row;
@@ -961,69 +387,32 @@ body {
 
     .sidebar {
         transform: translateX(0) !important;
+        box-shadow: none;
     }
 
     .sidebar-overlay {
         display: none !important;
     }
 
-    .main-content {
-        margin-left: 250px;
-        width: calc(100% - 250px);
-        padding: 25px;
+    .main-content,
+    #vista-inicio,
+    #vista-categoria {
+        margin-left: 260px !important;
+        width: calc(100% - 260px);
+        padding: 25px !important;
     }
 
-    .img-horizontal {
-        height: 120px;
-    }
-}
-
-/* MEDIA QUERIES (MÓVILES) */
-@media (max-width: 991.98px) {
-    .sidebar {
-        transform: translateX(-100%);
+    .grid-productos,
+    .contenedor-cards {
+        grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+        gap: 20px !important;
     }
 
-    .sidebar.active {
-        transform: translateX(0);
+    .card img, .card-img-container img {
+        height: 160px;
     }
 
-    .sidebar-overlay.active {
-        display: block;
+    .btn-add, .btn-agregar, .btn-comprar { 
+        font-size: 0.85rem;
     }
-}
-
-
-/* Estilos para centrar el modal en pantalla completa */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente */
-    display: none; /* Se oculta por defecto */
-    justify-content: center;
-    align-items: center;
-    z-index: 1050;
-    padding: 15px;
-}
-
-/* Modificamos el contenido para centrar y limitar su tamaño */
-.modal-overlay .modal-content {
-    background-color: #ffffff;
-    padding: 24px;
-    border-radius: 12px;
-    max-width: 500px;
-    width: 100%;
-    max-height: 90vh;
-    overflow-y: auto;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-}
-
-
-.img-horizontal {
-    object-fit: cover;
-    max-height: 150px;
-    width: 100%;
 }

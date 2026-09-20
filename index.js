@@ -20,10 +20,9 @@ const productosRefacciones = [
     { id: 101, nombre: "Filtro de Aceite", precio: 250, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwCKUg6fWnjzyNZz1hd7CMLserU4luTFfnY9W-Jkb3FQ&s=10" },
     { id: 102, nombre: "Juego de Llantas Premium", precio: 1200, img: "https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=500&q=80" },
     { id: 103, nombre: "Batería High Performance", precio: 950, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnkXpdu2Xi-6ncT0BAI97pArpu8Y1adNLTSm8forQ48Q&s=10" },
-    { id: 101, nombre: "Blatas", precio: 300, img: "https://contentassets.autozone.com/product_image/MEX/1684/CFHH/MKD1592/MKD1592-01.jpg" },
-    { id: 102, nombre: "Rines", precio: 1500, img: "https://www.todosobreruedas.pro/wp-content/uploads/2023/10/Mejores-Marcas-para-Rines-2.jpg" },
-    { id: 103, nombre: "Aleron para Auto Hatchback Sedan Metal", precio: 1000, img: "https://m.media-amazon.com/images/I/51SkRT5DmWL.jpg" }
-     
+    { id: 104, nombre: "Blatas", precio: 300, img: "https://contentassets.autozone.com/product_image/MEX/1684/CFHH/MKD1592/MKD1592-01.jpg" },
+    { id: 105, nombre: "Rines", precio: 1500, img: "https://www.todosobreruedas.pro/wp-content/uploads/2023/10/Mejores-Marcas-para-Rines-2.jpg" },
+    { id: 106, nombre: "Aleron para Auto Hatchback Sedan Metal", precio: 1000, img: "https://m.media-amazon.com/images/I/51SkRT5DmWL.jpg" }
 ];
 
 // 🚗 SECCIÓN AUTOS
@@ -31,11 +30,9 @@ const productosAutos = [
     { id: 201, nombre: "Sedán Deportivo 2024", precio: 350000, img: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=500&q=80" },
     { id: 202, nombre: "Camioneta SUV Familiar", precio: 480000, img: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=500&q=80" },
     { id: 203, nombre: "Deportivo Coupe Turbo", precio: 620000, img: "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=500&q=80" },
-    
-    { id: 201, nombre: "Aveo HB 2026", precio: 4500, img: "https://www.chevrolet.com.mx/content/dam/chevrolet/na/mx/es/vdc-collections/2026/cars/aveo-hb/01-images/2026-aveohb-selector-v2.jpg?imwidth=3000" },
-    { id: 202, nombre: "Silverado 2026", precio: 8200, img: "https://www.chevrolet.com.mx/content/dam/chevrolet/na/mx/es/vdc-collections/2026/pickups-and-trucks/silverado/01-images/2026-silverado-custom-selector-v2.jpg?imwidth=3000" },
-    { id: 203, nombre: "Corvette ZR1 2026", precio: 5900, img: "https://www.chevrolet.com.mx/content/dam/chevrolet/na/mx/es/vdc-collections/2026/performance/corvette-zr1/01-images/2026-corvette-zr1.jpg?imwidth=3000" }
-
+    { id: 204, nombre: "Aveo HB 2026", precio: 4500, img: "https://www.chevrolet.com.mx/content/dam/chevrolet/na/mx/es/vdc-collections/2026/cars/aveo-hb/01-images/2026-aveohb-selector-v2.jpg?imwidth=3000" },
+    { id: 205, nombre: "Silverado 2026", precio: 8200, img: "https://www.chevrolet.com.mx/content/dam/chevrolet/na/mx/es/vdc-collections/2026/pickups-and-trucks/silverado/01-images/2026-silverado-custom-selector-v2.jpg?imwidth=3000" },
+    { id: 206, nombre: "Corvette ZR1 2026", precio: 5900, img: "https://www.chevrolet.com.mx/content/dam/chevrolet/na/mx/es/vdc-collections/2026/performance/corvette-zr1/01-images/2026-corvette-zr1.jpg?imwidth=3000" }
 ];
 
 // 🎨 SECCIÓN ACCESORIOS
@@ -43,18 +40,19 @@ const productosAccesorios = [
     { id: 301, nombre: "Cubre Asientos de Piel", precio: 1100, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWOrCWwSiqYhS2HyekIgEZTwVBY9R_xc-6oZ2IMrCC_Q&s=10"},
     { id: 302, nombre: "Porta Celular Carga Inalámbrica", precio: 450, img: "https://images.samsung.com/is/image/samsung/p6pim/mx/feature/166685824/mx-feature-no-interruptions--just-fast-qi-2-0-wireless-charging-549663017?$FB_TYPE_A_MO_JPG$" },
     { id: 303, nombre: "Tapetes de Alto Rendimiento", precio: 650, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSczvkXjI7gfM7Nb9XSj95J3njsgLIAS23-SZAlYD-LEQ&s=10" },
-    
-    { id: 301, nombre: "PUNTA DE ESCAPE DOBLE SALIDA EN NEGRO PIANO", precio: 7859000, img:"https://www.chevrolet.com.mx/content/dam/chevrolet/na/mx/es/index/accesories/01-images/2026/agosto/05-chevrolet-accesorios-tracker-kit-black-edition-punta-escape-doble.jpg?imwidth=3000"},
-    { id: 302, nombre: "Cubre volante", precio: 75900, img: "https://images.sodimac.com/v3/assets/blt2f8082df109cfbfb/bltfb3fc5e1952fc5cf/66c8c45a1793032ce6b55717/cat1660015.jpg" },
-    { id: 303, nombre: "Funda para carro ", precio: 55800, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-r1Fdh-oUnScNl27S6yb5diSjWEvmZ3gGv9trzHEA4g&s=10" }
-
+    { id: 304, nombre: "PUNTA DE ESCAPE DOBLE SALIDA EN NEGRO PIANO", precio: 7859000, img:"https://www.chevrolet.com.mx/content/dam/chevrolet/na/mx/es/index/accesories/01-images/2026/agosto/05-chevrolet-accesorios-tracker-kit-black-edition-punta-escape-doble.jpg?imwidth=3000"},
+    { id: 305, nombre: "Cubre volante", precio: 75900, img: "https://images.sodimac.com/v3/assets/blt2f8082df109cfbfb/bltfb3fc5e1952fc5cf/66c8c45a1793032ce6b55717/cat1660015.jpg" },
+    { id: 306, nombre: "Funda para carro ", precio: 55800, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-r1Fdh-oUnScNl27S6yb5diSjWEvmZ3gGv9trzHEA4g&s=10" }
 ];
 
 // ==========================================
 // 🚀 INICIALIZACIÓN DE LA APLICACIÓN
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
+    // Inicializar lógica completa del menú desplegable móvil
     inicializarMenuMobile();
+    
+    // Estado del carrito
     actualizarCarritoUI();
     
     // Si viene desde "Comprar Ahora" en una página externa
@@ -80,39 +78,59 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (tipoSeccion === 'accesorios') {
             renderizarProductosEstaticos(productosAccesorios);
         } else {
-            // Por defecto carga los productos de Inicio (App.html)
+            // Por defecto carga los productos de Inicio
             renderizarProductosEstaticos(productosInicio);
         }
     }
 });
 
-// CONTROL DEL MENÚ MÓVIL
-function toggleMenu() {
-    const sidebar = document.querySelector('.sidebar') || document.getElementById('sidebar');
-    const overlay = document.getElementById('overlay') || document.getElementById('sidebar-overlay');
-    
-    if (sidebar) {
-        sidebar.classList.toggle('open');
-        sidebar.classList.toggle('active');
-    }
-    if (overlay) {
-        const isOpen = sidebar && (sidebar.classList.contains('open') || sidebar.classList.contains('active'));
-        overlay.style.display = isOpen ? 'block' : 'none';
-        overlay.classList.toggle('active', isOpen);
-    }
-}
-
+// ==========================================
+// 🍔 CONTROL DEL MENÚ MÓVIL
+// ==========================================
 function inicializarMenuMobile() {
-    const toggleBtn = document.getElementById("toggle-menu");
-    const closeBtn = document.getElementById("close-menu");
-    const overlay = document.getElementById('overlay') || document.getElementById('sidebar-overlay');
+    // Selección de elementos
+    const menuToggle = document.querySelector('.btn-toggle-menu') || document.querySelector('.menu-toggle') || document.getElementById("toggle-menu");
+    const sidebar = document.querySelector('.sidebar') || document.getElementById('sidebar');
+    const overlay = document.querySelector('.sidebar-overlay') || document.getElementById('overlay') || document.getElementById('sidebar-overlay');
+    const btnClose = document.querySelector('.btn-close-sidebar') || document.getElementById("close-menu");
 
-    if (toggleBtn) toggleBtn.addEventListener("click", toggleMenu);
-    if (closeBtn) closeBtn.addEventListener("click", toggleMenu);
-    if (overlay) overlay.addEventListener("click", toggleMenu);
+    // Función para abrir el menú
+    const openMenu = () => {
+        if (sidebar) {
+            sidebar.classList.add('active', 'open');
+        }
+        if (overlay) {
+            overlay.classList.add('active');
+            overlay.style.display = 'block';
+        }
+    };
+
+    // Función para cerrar el menú
+    const closeMenu = () => {
+        if (sidebar) {
+            sidebar.classList.remove('active', 'open');
+        }
+        if (overlay) {
+            overlay.classList.remove('active');
+            overlay.style.display = 'none';
+        }
+    };
+
+    // Eventos de clic para abrir/cerrar
+    if (menuToggle) menuToggle.addEventListener('click', openMenu);
+    if (btnClose) btnClose.addEventListener('click', closeMenu);
+    if (overlay) overlay.addEventListener('click', closeMenu);
+
+    // Cerrar el menú automáticamente al hacer clic en cualquier opción/enlace en móviles
+    const menuLinks = document.querySelectorAll('.sidebar nav a, .sidebar nav button');
+    menuLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth < 992) {
+                closeMenu();
+            }
+        });
+    });
 }
-
-
 
 // NAVEGACIÓN
 function navegar(categoria, btn) {
@@ -133,14 +151,6 @@ function navegar(categoria, btn) {
         if (vistaCat) vistaCat.style.display = 'block';
         if (titulo) titulo.innerText = "Catálogo de " + categoria.toUpperCase();
         cargarProductosCategoria(categoria);
-    }
-
-    const sidebar = document.querySelector('.sidebar') || document.getElementById('sidebar');
-    const overlay = document.getElementById('overlay') || document.getElementById('sidebar-overlay');
-    if (sidebar) sidebar.classList.remove('open', 'active');
-    if (overlay) {
-        overlay.style.display = 'none';
-        overlay.classList.remove('active');
     }
 }
 
@@ -211,7 +221,7 @@ function renderGrid(productos, contenedorId) {
     }).join('');
 }
 
-// RENDERIZADO DE PRODUCTOS ESTÁTICOS CON RESPONSIVIDAD MEJORADA
+// RENDERIZADO DE PRODUCTOS ESTÁTICOS
 function renderizarProductosEstaticos(listaProductos = productosInicio) {
     const container = document.getElementById("productos-container");
     if (!container) return;
@@ -220,7 +230,6 @@ function renderizarProductosEstaticos(listaProductos = productosInicio) {
 
     listaProductos.forEach(prod => {
         const col = document.createElement("div");
-        // Ajustado para dar independencia y separación entre ventanas
         col.className = "col-12 col-md-6 col-xl-4 mb-3"; 
         col.innerHTML = `
             <div class="card card-horizontal h-100 shadow-sm">
@@ -402,7 +411,7 @@ async function procesarPago(e) {
                 <p><strong>Cliente:</strong> ${data.ticket.cliente}</p>
                 <p><strong>Pago:</strong> ${data.ticket.tarjeta_enmascarada}</p>
                 <hr style="margin:8px 0;">
-                ${data.ticket.items.map(i => `<p>${i.cantidad}x ${i.nombre} - $${(i.precio * i.cantidad).toFixed(2)}</p>`).join('')}
+                ${data.ticket.items.map(i => `<p>${i.cantidad}x ${i.nombre} -$${(i.precio * i.cantidad).toFixed(2)}</p>`).join('')}
                 <hr style="margin:8px 0;">
                 <h4>TOTAL: $${data.ticket.total.toFixed(2)} MXN</h4>
             `;

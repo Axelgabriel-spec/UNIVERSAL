@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador de Refaccionarias | UNIVERSAL</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-color: #f8fafc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .search-banner {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            padding: 45px 15px;
+            border-radius: 0 0 20px 20px;
+        }
+        .card-refaccionaria {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            background: white;
+        }
+        .card-refaccionaria:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+        }
+        .badge-tag {
+            background-color: #e2e8f0;
+            color: #334155;
+            font-size: 0.75rem;
+            margin-right: 4px;
+            margin-bottom: 4px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CABECERA Y BUSCADOR -->
+    <header class="search-banner text-center mb-4">
+        <div class="container" style="max-width: 700px;">
+            <h1 class="fw-bold mb-2">🔍 Directorio de Refaccionarias</h1>
+            <p class="text-light opacity-75 mb-4">Encuentra proveedores y tiendas automotrices cerca de ti por nombre, marca o refacción.</p>
+            
+            <div class="input-group input-group-lg shadow-sm">
+                <span class="input-group-text bg-white border-0"><i class="bi bi-search text-muted"></i></span>
+                <input type="text" id="input-busqueda" class="form-control border-0 fs-6" placeholder="Busca 'AutoZone', 'Frenos', 'CDMX', 'Nissan'..." onkeyup="filtrarRefaccionarias()">
+                <button class="btn btn-warning fw-bold px-4" type="button" onclick="filtrarRefaccionarias()">Buscar</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- RESULTADOS Y GRID DE TARJETAS -->
+    <main class="container mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="m-0 fw-bold text-secondary" id="contador-resultados">Mostrando refaccionarias</h5>
+        </div>
+
+        <div class="row g-4" id="contenedor-cards">
+            <!-- Las tarjetas se generan dinámicamente con JavaScript -->
+        </div>
+    </main>
+
+    <!-- MODAL POP-UP INFORMATIVO -->
+    <div class="modal fade" id="modalRefaccionaria" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-dark text-white">
+                    <h5 class="modal-title fw-bold" id="modal-titulo">Nombre Refaccionaria</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="text-center mb-3">
+                        <img id="modal-img" src="" alt="Logo" class="rounded mb-2" style="max-height: 100px; object-fit: contain;">
+                        <div id="modal-tags" class="mt-2"></div>
+                    </div>
+                    <p id="modal-descripcion" class="text-muted small"></p>
+                    <hr>
+                    <div class="mb-2"><i class="bi bi-geo-alt-fill text-danger me-2"></i><strong>Ubicación:</strong> <span id="modal-ubicacion"></span></div>
+                    <div class="mb-2"><i class="bi bi-telephone-fill text-primary me-2"></i><strong>Teléfono:</strong> <span id="modal-telefono"></span></div>
+                    <div class="mb-3"><i class="bi bi-clock-fill text-warning me-2"></i><strong>Horario:</strong> <span id="modal-horario"></span></div>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <a id="modal-btn-web" href="#" target="_blank" class="btn btn-primary fw-bold py-2">
+                            🌐 Ir a la Página Web Oficial <i class="bi bi-box-arrow-up-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- LÓGICA DE BÚSQUEDA Y DICCIONARIO EN JAVASCRIPT -->
+    <script>
+        // ==========================================
+        // 📚 DICCIONARIO DE REFACCIONARIAS Y PALABRAS CLAVE
+        // ==========================================
+        const directorioRefaccionarias = [
+            {
+                id: 1,
+                nombre: "AutoZone México",
+                logotipo: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/AutoZone_logo.svg/1200px-AutoZone_logo.svg.png",
+                descripcion: "Cadena líder en venta de autopartes, accesorios, baterías y herramientas con diagnóstico gratuito.",
+                ubicación: "Nacional (Sucursales en todo México)",
+                telefono: "800 715 2600",
+                horario: "Lunes a Domingo: 8:00 AM - 9:00 PM",
+                web: "https://www.autozone.com.mx",
+                // DICCIONARIO DE PALABRAS CLAVE PARA BÚSQUEDA
+                keywords: ["autozone", "baterias", "aceite", "scanner", "herramientas", "nacional", "accesorios", "refacciones generales", "frenos"]
+            },
+            {
+                id: 2,
+                nombre: "Refaccionaria California",
+                logotipo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4XW0sXm9t8p5L6G_m2Z-2n",
+                descripcion: "Especialistas en suspensión, dirección, frenos y partes de motor para marcas nacionales e importadas.",
+                ubicación: "CDMX y Área Metropolitana",
+                telefono: "55 5729 4200",
+                horario: "Lunes a Sábado: 8:00 AM - 7:00 PM",
+                web: "https://www.refaccionariacalifornia.com.mx",
+                keywords: ["california", "cdmx", "suspension", "amortiguadores", "frenos", "motor", "estado de mexico", "vws", "chevy"]
+            },
+            {
+                id: 3,
+                nombre: "CEDIS Refaccionaria Mario",
+                logotipo: "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=300&q=80",
+                descripcion: "Distribuidor mayorista de autopartes electricas, marchas, alternadores y sensores de inyección electrónica.",
+                ubicación: "Guadalajara, Jalisco",
+                telefono: "33 3619 8899",
+                horario: "Lunes a Viernes: 9:00 AM - 6:30 PM",
+                web: "https://www.google.com",
+                keywords: ["mario", "guadalajara", "jalisco", "electrico", "alternador", "sensores", "marchas", "baleros"]
+            },
+            {
+                id: 4,
+                nombre: "Rolcar Autopartes",
+                logotipo: "https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?w=300&q=80",
+                descripcion: "Venta de refacciones mecánicas, colisión y mantenimiento preventivo para flotillas y autos particulares.",
+                ubicación: "Monterrey, Nuevo León / Zona Norte",
+                telefono: "81 8150 7000",
+                horario: "Lunes a Sábado: 8:30 AM - 7:00 PM",
+                web: "https://www.rolcar.com.mx",
+                keywords: ["rolcar", "monterrey", "nuevo leon", "norte", "colision", "flotillas", "aceites", "filtros"]
+            }
+        ];
+
+        // Instancia del modal de Bootstrap
+        let modalBS;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            modalBS = new bootstrap.Modal(document.getElementById('modalRefaccionaria'));
+            renderizarTarjetas(directorioRefaccionarias);
+        });
+
+        // ==========================================
+        // 🔎 FUNCIÓN DE FILTRADO INTELIGENTE
+        // ==========================================
+        function filtrarRefaccionarias() {
+            const texto = document.getElementById('input-busqueda').value.toLowerCase().trim();
+
+            if (texto === "") {
+                renderizarTarjetas(directorioRefaccionarias);
+                return;
+            }
+
+            // Filtra si la palabra está en el Nombre, Ubicación o en su DICCIONARIO de Keywords
+            const resultados = directorioRefaccionarias.filter(item => {
+                const coincideNombre = item.nombre.toLowerCase().includes(texto);
+                const coincideUbicacion = item.ubicación.toLowerCase().includes(texto);
+                const coincideKeywords = item.keywords.some(kw => kw.toLowerCase().includes(texto));
+
+                return coincideNombre || coincideUbicacion || coincideKeywords;
+            });
+
+            renderizarTarjetas(resultados);
+        }
+
+        // ==========================================
+        // 🎴 DIBUJAR TARJETAS EN PANTALLA
+        // ==========================================
+        function renderizarTarjetas(lista) {
+            const contenedor = document.getElementById('contenedor-cards');
+            const contador = document.getElementById('contador-resultados');
+            contenedor.innerHTML = "";
+
+            contador.innerText = `Mostrando ${lista.length} refaccionaria(s)`;
+
+            if (lista.length === 0) {
+                contenedor.innerHTML = `
+                    <div class="col-12 text-center py-5">
+                        <i class="bi bi-exclamation-circle text-muted fs-1"></i>
+                        <p class="mt-2 text-muted">No encontramos refaccionarias que coincidan con tu búsqueda.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            lista.forEach(ref => {
+                const tagsHTML = ref.keywords.slice(0, 4).map(kw => `<span class="badge badge-tag">${kw}</span>`).join('');
+
+                const col = document.createElement('div');
+                col.className = 'col-12 col-md-6 col-lg-4';
+                col.innerHTML = `
+                    <div class="card card-refaccionaria h-100 p-3 d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <img src="${ref.logotipo}" alt="${ref.nombre}" style="width: 50px; height: 50px; object-fit: contain;">
+                                <div>
+                                    <h5 class="fw-bold m-0 fs-6">${ref.nombre}</h5>
+                                    <small class="text-muted"><i class="bi bi-geo-alt"></i> ${ref.ubicación}</small>
+                                </div>
+                            </div>
+                            <p class="small text-secondary mb-2">${ref.descripcion.substring(0, 90)}...</p>
+                            <div class="mb-3">${tagsHTML}</div>
+                        </div>
+                        <button class="btn btn-outline-primary btn-sm w-100 fw-bold" onclick="abrirPopUp(${ref.id})">
+                            <i class="bi bi-eye"></i> Ver Detalles y Sitio Web
+                        </button>
+                    </div>
+                `;
+                contenedor.appendChild(col);
+            });
+        }
+
+        // ==========================================
+        // 🪟 ABRIR MODAL POP-UP
+        // ==========================================
+        function abrirPopUp(id) {
+            const ref = directorioRefaccionarias.find(r => r.id === id);
+            if (!ref) return;
+
+            document.getElementById('modal-titulo').innerText = ref.nombre;
+            document.getElementById('modal-img').src = ref.logotipo;
+            document.getElementById('modal-descripcion').innerText = ref.descripcion;
+            document.getElementById('modal-ubicacion').innerText = ref.ubicación;
+            document.getElementById('modal-telefono').innerText = ref.telefono;
+            document.getElementById('modal-horario').innerText = ref.horario;
+            
+            const btnWeb = document.getElementById('modal-btn-web');
+            btnWeb.href = ref.web;
+
+            document.getElementById('modal-tags').innerHTML = ref.keywords.map(kw => `<span class="badge bg-secondary me-1">${kw}</span>`).join('');
+
+            modalBS.show();
+        }
+    </script>
+</body>
+</html>

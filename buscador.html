@@ -8,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="index.css">
     <style>
         body {
             background-color: #f8fafc;
@@ -16,7 +17,7 @@
         .search-banner {
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
             color: white;
-            padding: 45px 15px;
+            padding: 40px 15px;
             border-radius: 0 0 20px 20px;
         }
         .card-refaccionaria {
@@ -41,50 +42,63 @@
 </head>
 <body>
 
- <!-- OVERLAY PARA CERRAR EL MENÚ EN MÓVIL AL HACER CLIC FUERA -->
+    <!-- BARRA SUPERIOR MÓVIL (Visible solo en celulares/tabletas) -->
+    <div class="mobile-navbar d-lg-none">
+        <button class="btn btn-dark btn-toggle-menu" id="toggle-menu">☰</button>
+        <span class="mobile-logo">UNIVERSAL</span>
+        <button type="button" class="btn btn-warning rounded-pill px-3 py-1 fw-bold shadow-sm" onclick="abrirCarrito()">
+            🛒 <span id="cart-count-mobile">0</span>
+        </button>
+    </div>
+
+    <!-- OVERLAY PARA CERRAR EL MENÚ EN MÓVIL AL HACER CLIC FUERA -->
     <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
     <!-- MENÚ / SIDEBAR PRINCIPAL -->
     <aside class="sidebar" id="sidebar">
-        <div class="sidebar-header d-flex justify-content-between align-items-center">
-           
-            <button class="btn-close-sidebar d-lg-none" id="close-menu">✕</button>
+        <div class="sidebar-header d-flex justify-content-between align-items-center p-3">
+            <h2 class="m-0 text-info">UNIVERSAL</h2>
+            <button class="btn-close-sidebar d-lg-none border-0 bg-transparent text-white fs-4" id="close-menu">✕</button>
         </div>
-        <nav>
-            <a href="index.html">Inicio</a>
-            <a href="#" class="active" onclick="navegar('inicio', this)">🚘 Todos los Autos</a>
-            
+        <nav class="d-flex flex-column p-3">
+            <a href="index.html" class="py-2 text-decoration-none">Inicio</a>
+            <a href="refacciones.html" class="py-2 text-decoration-none">Refacciones</a>
+            <a href="autos.html" class="py-2 text-decoration-none">Autos</a>
+            <a href="accesorios.html" class="py-2 text-decoration-none">Accesorios</a>
+            <a href="#" class="active py-2 text-decoration-none">🔍 Directorio</a>
         </nav>
 
-        <div class="d-flex align-items-center justify-content-center" style="width: auto; height: auto;">
-          <img src="autopartes.png" alt="Autopartes Universal Logo" style="width: 300px; height: 200px; object-fit: contain;">
+        <div class="d-flex align-items-center justify-content-center p-3 mt-auto">
+            <img src="autopartes.png" alt="Autopartes Universal Logo" style="width: 100%; max-width: 220px; height: auto; object-fit: contain;">
         </div>
-
     </aside>
 
-     <!-- CABECERA Y BUSCADOR -->
-    <header class="search-banner text-center mb-4">
-        <div class="container" style="max-width: 700px;">
-            <h1 class="fw-bold mb-2">🔍 Directorio de Refaccionarias</h1>
-            <p class="text-light opacity-75 mb-4">Encuentra proveedores y tiendas automotrices cerca de ti por nombre, marca o refacción.</p>
-            
-            <div class="input-group input-group-lg shadow-sm">
-                <span class="input-group-text bg-white border-0"><i class="bi bi-search text-muted"></i></span>
-                <input type="text" id="input-busqueda" class="form-control border-0 fs-6" placeholder="Busca 'AutoZone', 'Frenos', 'CDMX', 'Nissan'..." onkeyup="filtrarRefaccionarias()">
-                <button class="btn btn-warning fw-bold px-4" type="button" onclick="filtrarRefaccionarias()">Buscar</button>
+    <!-- ÁREA PRINCIPAL CON LA CABECERA DEL BUSCADOR -->
+    <main class="main-content">
+        <!-- CABECERA Y BUSCADOR INTEGRADOC EN EL BANNER -->
+        <header class="search-banner text-center mb-4">
+            <div class="container" style="max-width: 700px;">
+                <h1 class="fw-bold mb-2">🔍 Directorio de Refaccionarias</h1>
+                <p class="text-light opacity-75 mb-4">Encuentra proveedores y tiendas automotrices cerca de ti por nombre, marca o refacción.</p>
+                
+                <div class="input-group input-group-lg shadow-sm">
+                    <span class="input-group-text bg-white border-0"><i class="bi bi-search text-muted"></i></span>
+                    <input type="text" id="input-busqueda" class="form-control border-0 fs-6" placeholder="Busca 'AutoZone', 'Frenos', 'CDMX', 'Nissan'..." onkeyup="filtrarRefaccionarias()">
+                    <button class="btn btn-warning fw-bold px-4" type="button" onclick="filtrarRefaccionarias()">Buscar</button>
+                </div>
             </div>
-        </div>
-    </header>
+        </header>
 
-    <!-- RESULTADOS Y GRID DE TARJETAS -->
-    <main class="container mb-5">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h5 class="m-0 fw-bold text-secondary" id="contador-resultados">Mostrando refaccionarias</h5>
-        </div>
+        <!-- RESULTADOS Y GRID DE TARJETAS -->
+        <section class="container mb-5">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="m-0 fw-bold text-secondary" id="contador-resultados">Mostrando refaccionarias</h5>
+            </div>
 
-        <div class="row g-4" id="contenedor-cards">
-            <!-- Las tarjetas se generan dinámicamente con JavaScript -->
-        </div>
+            <div class="row g-4" id="contenedor-cards">
+                <!-- Las tarjetas se generan dinámicamente con JavaScript -->
+            </div>
+        </section>
     </main>
 
     <!-- MODAL POP-UP INFORMATIVO -->
@@ -116,14 +130,12 @@
         </div>
     </div>
 
-    <!-- Bootstrap JS Bundle -->
+    <!-- Bootstrap 5 JS Bundle y App.js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="App.js"></script>
 
-    <!-- LÓGICA DE BÚSQUEDA Y DICCIONARIO EN JAVASCRIPT -->
+    <!-- LÓGICA DEL BUSCADOR Y DICCIONARIO -->
     <script>
-        // ==========================================
-        // 📚 DICCIONARIO DE REFACCIONARIAS Y PALABRAS CLAVE
-        // ==========================================
         const directorioRefaccionarias = [
             {
                 id: 1,
@@ -134,7 +146,6 @@
                 telefono: "800 715 2600",
                 horario: "Lunes a Domingo: 8:00 AM - 9:00 PM",
                 web: "https://www.autozone.com.mx",
-                // DICCIONARIO DE PALABRAS CLAVE PARA BÚSQUEDA
                 keywords: ["autozone", "baterias", "aceite", "scanner", "herramientas", "nacional", "accesorios", "refacciones generales", "frenos"]
             },
             {
@@ -152,7 +163,7 @@
                 id: 3,
                 nombre: "CEDIS Refaccionaria Mario",
                 logotipo: "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=300&q=80",
-                descripcion: "Distribuidor mayorista de autopartes electricas, marchas, alternadores y sensores de inyección electrónica.",
+                descripcion: "Distribuidor mayorista de autopartes eléctricas, marchas, alternadores y sensores de inyección electrónica.",
                 ubicación: "Guadalajara, Jalisco",
                 telefono: "33 3619 8899",
                 horario: "Lunes a Viernes: 9:00 AM - 6:30 PM",
@@ -172,7 +183,6 @@
             }
         ];
 
-        // Instancia del modal de Bootstrap
         let modalBS;
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -180,9 +190,6 @@
             renderizarTarjetas(directorioRefaccionarias);
         });
 
-        // ==========================================
-        // 🔎 FUNCIÓN DE FILTRADO INTELIGENTE
-        // ==========================================
         function filtrarRefaccionarias() {
             const texto = document.getElementById('input-busqueda').value.toLowerCase().trim();
 
@@ -191,7 +198,6 @@
                 return;
             }
 
-            // Filtra si la palabra está en el Nombre, Ubicación o en su DICCIONARIO de Keywords
             const resultados = directorioRefaccionarias.filter(item => {
                 const coincideNombre = item.nombre.toLowerCase().includes(texto);
                 const coincideUbicacion = item.ubicación.toLowerCase().includes(texto);
@@ -203,9 +209,6 @@
             renderizarTarjetas(resultados);
         }
 
-        // ==========================================
-        // 🎴 DIBUJAR TARJETAS EN PANTALLA
-        // ==========================================
         function renderizarTarjetas(lista) {
             const contenedor = document.getElementById('contenedor-cards');
             const contador = document.getElementById('contador-resultados');
@@ -250,9 +253,6 @@
             });
         }
 
-        // ==========================================
-        // 🪟 ABRIR MODAL POP-UP
-        // ==========================================
         function abrirPopUp(id) {
             const ref = directorioRefaccionarias.find(r => r.id === id);
             if (!ref) return;

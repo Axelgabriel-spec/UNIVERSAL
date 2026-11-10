@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buscador</title>
+    <title>Buscador - UNIVERSAL</title>
     <link rel="icon" type="image/png" href="autopartes.png">
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -14,23 +14,34 @@
         body {
             background-color: #f8fafc;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding-top: 70px; /* Espacio para compensar el navbar fijo */
         }
+        
+        /* BANNER HORIZONTAL DE NAVEGACIÓN */
+        .navbar-top {
+            background-color: #1e293b;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+        
         .search-banner {
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
             color: white;
             padding: 40px 15px;
             border-radius: 0 0 20px 20px;
         }
+        
         .card-refaccionaria {
             border: 1px solid #e2e8f0;
             border-radius: 12px;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
             background: white;
         }
+        
         .card-refaccionaria:hover {
             transform: translateY(-4px);
             box-shadow: 0 10px 20px rgba(0,0,0,0.08);
         }
+        
         .badge-tag {
             background-color: #e2e8f0;
             color: #334155;
@@ -39,40 +50,43 @@
             margin-bottom: 4px;
             display: inline-block;
         }
+
+        .info-item {
+            font-size: 0.85rem;
+            color: #475569;
+        }
     </style>
 </head>
 <body>
 
-    <!-- BARRA SUPERIOR MÓVIL (Visible solo en celulares/tabletas) -->
-    <div class="mobile-navbar d-lg-none">
-        <button class="btn btn-dark btn-toggle-menu" id="toggle-menu">☰</button>
-        <span class="mobile-logo">UNIVERSAL</span>
-        <button type="button" class="btn btn-warning rounded-pill px-3 py-1 fw-bold shadow-sm" onclick="abrirCarrito()">
-            🛒 <span id="cart-count-mobile">0</span>
-        </button>
-    </div>
+    <!-- BARRA DE NAVEGACIÓN HORIZONTAL (BANNER TOP) -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-top fixed-top px-3">
+        <div class="container-fluid">
+            <!-- LOGO Y MARCA -->
+            <a class="navbar-brand d-flex align-items-center gap-2 fw-bold text-info" href="index.html">
+                <img src="autopartes.png" alt="Logo" style="height: 35px; width: auto; object-fit: contain;">
+                <span>UNIVERSAL</span>
+            </a>
 
-    <!-- OVERLAY PARA CERRAR EL MENÚ EN MÓVIL AL HACER CLIC FUERA -->
-    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+            <!-- BOTÓN HAMBURGUESA PARA MÓVILES -->
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarUniversal" aria-controls="navbarUniversal" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-    <!-- MENÚ / SIDEBAR PRINCIPAL -->
-    <aside class="sidebar" id="sidebar">
-        <div class="sidebar-header d-flex justify-content-between align-items-center p-3">
-            <h2 class="m-0 text-info">UNIVERSAL</h2>
-            <button class="btn-close-sidebar d-lg-none border-0 bg-transparent text-white fs-4" id="close-menu">✕</button>
+            <!-- MENÚ HORIZONTAL DE ENLACES -->
+            <div class="collapse navbar-collapse" id="navbarUniversal">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-3">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Inicio</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <nav class="d-flex flex-column p-3">
-            <a href="index.html" class="py-2 text-decoration-none">Inicio</a>
-        </nav>
+    </nav>
 
-        <div class="d-flex align-items-center justify-content-center p-3 mt-auto">
-            <img src="autopartes.png" alt="Autopartes Universal Logo" style="width: 100%; max-width: 220px; height: auto; object-fit: contain;">
-        </div>
-    </aside>
-
-    <!-- ÁREA PRINCIPAL CON LA CABECERA DEL BUSCADOR -->
-    <main class="main-content">
-        <!-- CABECERA Y BUSCADOR INTEGRADO EN EL BANNER -->
+    <!-- ÁREA PRINCIPAL -->
+    <main class="w-100 p-0">
+        <!-- BANNER DE BÚSQUEDA -->
         <header class="search-banner text-center mb-4">
             <div class="container" style="max-width: 700px;">
                 <h1 class="fw-bold mb-2">🔍 Directorio de Refaccionarias</h1>
@@ -86,115 +100,23 @@
             </div>
         </header>
 
-        <!-- RESULTADOS Y GRID DE TARJETAS -->
+        <!-- RESULTADOS Y GRID DE TARJETAS DIRECTAS -->
         <section class="container mb-5">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h5 class="m-0 fw-bold text-secondary" id="contador-resultados">Mostrando refaccionarias</h5>
             </div>
 
             <div class="row g-4" id="contenedor-cards">
-                <!-- Las tarjetas se generan dinámicamente con JavaScript -->
+                <!-- Las tarjetas se generan dinámicamente con la información completa visible -->
             </div>
         </section>
     </main>
-
-    <!-- MODAL POP-UP INFORMATIVO (DETALLES REFACCIONARIA) -->
-    <div class="modal fade" id="modalRefaccionaria" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content border-0 shadow">
-                <div class="modal-header bg-dark text-white">
-                    <h5 class="modal-title fw-bold" id="modal-titulo">Nombre Refaccionaria</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" onclick="cerrarPopUp()" aria-label="Close"></button>
-                </div>
-                <div class="modal-body p-4">
-                    <div class="text-center mb-3">
-                        <img id="modal-img" src="" alt="Logo" class="rounded mb-2" style="max-height: 100px; object-fit: contain;">
-                        <div id="modal-tags" class="mt-2"></div>
-                    </div>
-                    <p id="modal-descripcion" class="text-muted small"></p>
-                    <hr>
-                    <div class="mb-2"><i class="bi bi-geo-alt-fill text-danger me-2"></i><strong>Ubicación:</strong> <span id="modal-ubicacion"></span></div>
-                    <div class="mb-2"><i class="bi bi-telephone-fill text-primary me-2"></i><strong>Teléfono:</strong> <span id="modal-telefono"></span></div>
-                    <div class="mb-3"><i class="bi bi-clock-fill text-warning me-2"></i><strong>Horario:</strong> <span id="modal-horario"></span></div>
-
-                    <div class="d-grid gap-2 mt-4">
-                        <a id="modal-btn-web" href="#" target="_blank" class="btn btn-primary fw-bold py-2">
-                            🌐 Ir a la Página Web Oficial <i class="bi bi-box-arrow-up-right ms-1"></i>
-                        </a>
-                        <button type="button" class="btn btn-secondary fw-bold" data-bs-dismiss="modal" onclick="cerrarPopUp()">Cerrar Ventana</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL CARRITO Y PAGO (INTEGRADO PARA SOPORTE CON APP.JS) -->
-    <div id="modal-carrito" class="modal-overlay" style="display: none;">
-        <div class="modal-content">
-            <div class="d-flex justify-content-between align-items-center pb-2 border-bottom">
-                <h3 class="m-0">🛒 Mi Carrito</h3>
-                <div class="d-flex align-items-center gap-2">
-                    <button type="button" onclick="vaciarCarrito()" class="btn btn-sm btn-outline-danger">Vaciar Carrito</button>
-                    <button type="button" class="btn-close" onclick="cerrarModal('modal-carrito')"></button>
-                </div>
-            </div>
-            
-            <div id="cart-items-container" class="my-3"></div>
-            <h4 class="text-end fw-bold mb-3">Total: $<span id="cart-total">0.00</span> MXN</h4>
-            
-            <hr class="my-3">
-
-            <h4 class="mb-3">💳 Proceso Bancario</h4>
-            <form onsubmit="procesarPago(event)">
-                <div class="mb-2">
-                    <label class="form-label mb-1" style="font-size:0.9rem;">Nombre en la tarjeta:</label>
-                    <input type="text" id="pago-nombre" class="form-control" required placeholder="Juan Pérez">
-                </div>
-                <div class="mb-2">
-                    <label class="form-label mb-1" style="font-size:0.9rem;">Número de Tarjeta (16 dígitos):</label>
-                    <input type="text" id="pago-tarjeta" class="form-control" maxlength="16" required placeholder="1234567890123456">
-                </div>
-                <div class="row g-2 mb-3">
-                    <div class="col-6">
-                        <label class="form-label mb-1" style="font-size:0.9rem;">Vencimiento:</label>
-                        <input type="text" class="form-control" placeholder="MM/AA" required>
-                    </div>
-                    <div class="col-6">
-                        <label class="form-label mb-1" style="font-size:0.9rem;">CVV:</label>
-                        <input type="password" class="form-control" maxlength="3" required placeholder="123">
-                    </div>
-                </div>
-
-                <div class="d-flex gap-2">
-                    <button type="button" class="btn btn-secondary flex-fill" onclick="cerrarModal('modal-carrito')">Cancelar</button>
-                    <button type="submit" class="btn btn-success flex-fill fw-bold">Pagar y Generar Ticket</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- MODAL TICKET -->
-    <div id="modal-ticket" class="modal-overlay" style="display: none;">
-        <div class="modal-content text-center" style="max-width: 450px;">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h4 class="m-0 text-success">✅ Transacción Exitosa</h4>
-                <button type="button" class="btn-close" onclick="cerrarModal('modal-ticket')"></button>
-            </div>
-            
-            <div id="ticket-contenido" class="ticket-box text-start p-3 bg-light rounded border mb-3"></div>
-            
-            <div class="d-flex gap-2">
-                <button type="button" onclick="window.print()" class="btn flex-fill text-white" style="background-color: #6366f1;">🖨️ Descargar / Imprimir</button>
-                <button type="button" onclick="cerrarModal('modal-ticket')" class="btn btn-secondary flex-fill">Cerrar</button>
-            </div>
-        </div>
-    </div>
 
     <!-- Bootstrap 5 JS Bundle y App.js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="App.js"></script>
 
-    <!-- LÓGICA DEL BUSCADOR Y DICCIONARIO -->
+    <!-- LÓGICA DEL BUSCADOR -->
     <script>
         const directorioRefaccionarias = [
             {
@@ -243,14 +165,6 @@
             }
         ];
 
-        let modalBS = null;
-
-        function obtenerModalInstance() {
-            const el = document.getElementById('modalRefaccionaria');
-            if (!el) return null;
-            return bootstrap.Modal.getInstance(el) || new bootstrap.Modal(el);
-        }
-
         document.addEventListener('DOMContentLoaded', () => {
             renderizarTarjetas(directorioRefaccionarias);
         });
@@ -293,55 +207,47 @@
             }
 
             lista.forEach(ref => {
-                const tagsHTML = ref.keywords.slice(0, 4).map(kw => `<span class="badge badge-tag">${kw}</span>`).join('');
+                const tagsHTML = ref.keywords.map(kw => `<span class="badge badge-tag">${kw}</span>`).join('');
 
                 const col = document.createElement('div');
                 col.className = 'col-12 col-md-6 col-lg-4';
                 col.innerHTML = `
                     <div class="card card-refaccionaria h-100 p-3 d-flex flex-column justify-content-between">
                         <div>
-                            <div class="d-flex align-items-center gap-3 mb-3">
-                                <img src="${ref.logotipo}" alt="${ref.nombre}" style="width: 50px; height: 50px; object-fit: contain;">
+                            <!-- ENCABEZADO CON LOGO Y NOMBRE -->
+                            <div class="d-flex align-items-center gap-3 mb-3 border-bottom pb-2">
+                                <img src="${ref.logotipo}" alt="${ref.nombre}" style="width: 55px; height: 55px; object-fit: contain;">
                                 <div>
-                                    <h5 class="fw-bold m-0 fs-6">${ref.nombre}</h5>
-                                    <small class="text-muted"><i class="bi bi-geo-alt"></i> ${ref.ubicación}</small>
+                                    <h5 class="fw-bold m-0 fs-6 text-dark">${ref.nombre}</h5>
                                 </div>
                             </div>
-                            <p class="small text-secondary mb-2">${ref.descripcion.substring(0, 90)}...</p>
+
+                            <!-- DESCRIPCIÓN -->
+                            <p class="small text-secondary mb-3">${ref.descripcion}</p>
+
+                            <!-- DETALLES VISIBLES DIRECTOS -->
+                            <div class="info-item mb-1">
+                                <i class="bi bi-geo-alt-fill text-danger me-1"></i> <strong>Ubicación:</strong> ${ref.ubicación}
+                            </div>
+                            <div class="info-item mb-1">
+                                <i class="bi bi-telephone-fill text-primary me-1"></i> <strong>Teléfono:</strong> ${ref.telefono}
+                            </div>
+                            <div class="info-item mb-3">
+                                <i class="bi bi-clock-fill text-warning me-1"></i> <strong>Horario:</strong> ${ref.horario}
+                            </div>
+
+                            <!-- PALABRAS CLAVE -->
                             <div class="mb-3">${tagsHTML}</div>
                         </div>
-                        <button class="btn btn-outline-primary btn-sm w-100 fw-bold" onclick="abrirPopUp(${ref.id})">
-                            <i class="bi bi-eye"></i> Ver Detalles y Sitio Web
-                        </button>
+
+                        <!-- BOTÓN DIRECTO A LA WEB OFICIAL -->
+                        <a href="${ref.web}" target="_blank" class="btn btn-primary btn-sm w-100 fw-bold">
+                            🌐 Ir a la Página Web Oficial <i class="bi bi-box-arrow-up-right ms-1"></i>
+                        </a>
                     </div>
                 `;
                 contenedor.appendChild(col);
             });
-        }
-
-        function abrirPopUp(id) {
-            const ref = directorioRefaccionarias.find(r => r.id === id);
-            if (!ref) return;
-
-            document.getElementById('modal-titulo').innerText = ref.nombre;
-            document.getElementById('modal-img').src = ref.logotipo;
-            document.getElementById('modal-descripcion').innerText = ref.descripcion;
-            document.getElementById('modal-ubicacion').innerText = ref.ubicación;
-            document.getElementById('modal-telefono').innerText = ref.telefono;
-            document.getElementById('modal-horario').innerText = ref.horario;
-            
-            const btnWeb = document.getElementById('modal-btn-web');
-            btnWeb.href = ref.web;
-
-            document.getElementById('modal-tags').innerHTML = ref.keywords.map(kw => `<span class="badge bg-secondary me-1">${kw}</span>`).join('');
-
-            const modal = obtenerModalInstance();
-            if (modal) modal.show();
-        }
-
-        function cerrarPopUp() {
-            const modal = obtenerModalInstance();
-            if (modal) modal.hide();
         }
     </script>
 </body>

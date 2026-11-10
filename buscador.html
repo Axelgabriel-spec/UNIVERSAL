@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buscador</title>
+    <title>Buscador de Refaccionarias | UNIVERSAL</title>
     <link rel="icon" type="image/png" href="autopartes.png">
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -63,6 +63,10 @@
         </div>
         <nav class="d-flex flex-column p-3">
             <a href="index.html" class="py-2 text-decoration-none">Inicio</a>
+            <a href="refacciones.html" class="py-2 text-decoration-none">Refacciones</a>
+            <a href="autos.html" class="py-2 text-decoration-none">Autos</a>
+            <a href="accesorios.html" class="py-2 text-decoration-none">Accesorios</a>
+            <a href="buscador.html" class="active py-2 text-decoration-none">🔍 Directorio</a>
         </nav>
 
         <div class="d-flex align-items-center justify-content-center p-3 mt-auto">
@@ -72,7 +76,7 @@
 
     <!-- ÁREA PRINCIPAL CON LA CABECERA DEL BUSCADOR -->
     <main class="main-content">
-        <!-- CABECERA Y BUSCADOR INTEGRADOC EN EL BANNER -->
+        <!-- CABECERA Y BUSCADOR INTEGRADO EN EL BANNER -->
         <header class="search-banner text-center mb-4">
             <div class="container" style="max-width: 700px;">
                 <h1 class="fw-bold mb-2">🔍 Directorio de Refaccionarias</h1>
@@ -98,13 +102,13 @@
         </section>
     </main>
 
-    <!-- MODAL POP-UP INFORMATIVO -->
+    <!-- MODAL POP-UP INFORMATIVO (DETALLES REFACCIONARIA) -->
     <div class="modal fade" id="modalRefaccionaria" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border-0 shadow">
                 <div class="modal-header bg-dark text-white">
                     <h5 class="modal-title fw-bold" id="modal-titulo">Nombre Refaccionaria</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" onclick="cerrarPopUp()" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-4">
                     <div class="text-center mb-3">
@@ -121,8 +125,71 @@
                         <a id="modal-btn-web" href="#" target="_blank" class="btn btn-primary fw-bold py-2">
                             🌐 Ir a la Página Web Oficial <i class="bi bi-box-arrow-up-right ms-1"></i>
                         </a>
+                        <button type="button" class="btn btn-secondary fw-bold" data-bs-dismiss="modal" onclick="cerrarPopUp()">Cerrar Ventana</button>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL CARRITO Y PAGO (INTEGRADO PARA SOPORTE CON APP.JS) -->
+    <div id="modal-carrito" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <div class="d-flex justify-content-between align-items-center pb-2 border-bottom">
+                <h3 class="m-0">🛒 Mi Carrito</h3>
+                <div class="d-flex align-items-center gap-2">
+                    <button type="button" onclick="vaciarCarrito()" class="btn btn-sm btn-outline-danger">Vaciar Carrito</button>
+                    <button type="button" class="btn-close" onclick="cerrarModal('modal-carrito')"></button>
+                </div>
+            </div>
+            
+            <div id="cart-items-container" class="my-3"></div>
+            <h4 class="text-end fw-bold mb-3">Total: $<span id="cart-total">0.00</span> MXN</h4>
+            
+            <hr class="my-3">
+
+            <h4 class="mb-3">💳 Proceso Bancario</h4>
+            <form onsubmit="procesarPago(event)">
+                <div class="mb-2">
+                    <label class="form-label mb-1" style="font-size:0.9rem;">Nombre en la tarjeta:</label>
+                    <input type="text" id="pago-nombre" class="form-control" required placeholder="Juan Pérez">
+                </div>
+                <div class="mb-2">
+                    <label class="form-label mb-1" style="font-size:0.9rem;">Número de Tarjeta (16 dígitos):</label>
+                    <input type="text" id="pago-tarjeta" class="form-control" maxlength="16" required placeholder="1234567890123456">
+                </div>
+                <div class="row g-2 mb-3">
+                    <div class="col-6">
+                        <label class="form-label mb-1" style="font-size:0.9rem;">Vencimiento:</label>
+                        <input type="text" class="form-control" placeholder="MM/AA" required>
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label mb-1" style="font-size:0.9rem;">CVV:</label>
+                        <input type="password" class="form-control" maxlength="3" required placeholder="123">
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="button" class="btn btn-secondary flex-fill" onclick="cerrarModal('modal-carrito')">Cancelar</button>
+                    <button type="submit" class="btn btn-success flex-fill fw-bold">Pagar y Generar Ticket</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL TICKET -->
+    <div id="modal-ticket" class="modal-overlay" style="display: none;">
+        <div class="modal-content text-center" style="max-width: 450px;">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="m-0 text-success">✅ Transacción Exitosa</h4>
+                <button type="button" class="btn-close" onclick="cerrarModal('modal-ticket')"></button>
+            </div>
+            
+            <div id="ticket-contenido" class="ticket-box text-start p-3 bg-light rounded border mb-3"></div>
+            
+            <div class="d-flex gap-2">
+                <button type="button" onclick="window.print()" class="btn flex-fill text-white" style="background-color: #6366f1;">🖨️ Descargar / Imprimir</button>
+                <button type="button" onclick="cerrarModal('modal-ticket')" class="btn btn-secondary flex-fill">Cerrar</button>
             </div>
         </div>
     </div>
@@ -180,10 +247,15 @@
             }
         ];
 
-        let modalBS;
+        let modalBS = null;
+
+        function obtenerModalInstance() {
+            const el = document.getElementById('modalRefaccionaria');
+            if (!el) return null;
+            return bootstrap.Modal.getInstance(el) || new bootstrap.Modal(el);
+        }
 
         document.addEventListener('DOMContentLoaded', () => {
-            modalBS = new bootstrap.Modal(document.getElementById('modalRefaccionaria'));
             renderizarTarjetas(directorioRefaccionarias);
         });
 
@@ -209,9 +281,10 @@
         function renderizarTarjetas(lista) {
             const contenedor = document.getElementById('contenedor-cards');
             const contador = document.getElementById('contador-resultados');
+            if (!contenedor) return;
+            
             contenedor.innerHTML = "";
-
-            contador.innerText = `Mostrando ${lista.length} refaccionaria(s)`;
+            if (contador) contador.innerText = `Mostrando ${lista.length} refaccionaria(s)`;
 
             if (lista.length === 0) {
                 contenedor.innerHTML = `
@@ -266,7 +339,13 @@
 
             document.getElementById('modal-tags').innerHTML = ref.keywords.map(kw => `<span class="badge bg-secondary me-1">${kw}</span>`).join('');
 
-            modalBS.show();
+            const modal = obtenerModalInstance();
+            if (modal) modal.show();
+        }
+
+        function cerrarPopUp() {
+            const modal = obtenerModalInstance();
+            if (modal) modal.hide();
         }
     </script>
 </body>
